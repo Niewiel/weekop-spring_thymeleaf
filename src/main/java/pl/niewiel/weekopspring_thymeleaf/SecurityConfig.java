@@ -1,5 +1,6 @@
 package pl.niewiel.weekopspring_thymeleaf;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,21 +9,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/css/**", "/index").permitAll()
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/css/**", "/index**").permitAll()
+                .antMatchers("/**/**").hasRole("USER")
                 .and()
-                .formLogin()
-                .loginPage("/login").failureUrl("/login-error");
+                .formLogin();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("user").password("user").roles("USER");
+                .withUser("user").password("{noop}user").roles("USER");
     }
 }
+
