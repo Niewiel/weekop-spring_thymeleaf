@@ -3,14 +3,20 @@ package pl.niewiel.weekopspring_thymeleaf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DfController {
 
-    @GetMapping("index")
+    @RequestMapping("/user/index")
     public String index(){
-        return "redirect:";
+        return "user/index";
+    }
+
+    @GetMapping("register.html")
+    public String register(){
+        return "register";
     }
 
     @GetMapping("/greeting")
@@ -19,9 +25,5 @@ public class DfController {
         return "greeting";
     }
 
-    @GetMapping("/user/index")
-    public String userIndex(){
-        return "/user/index";
-    }
 
 }

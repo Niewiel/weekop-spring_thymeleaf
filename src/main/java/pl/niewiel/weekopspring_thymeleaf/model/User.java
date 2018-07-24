@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -29,6 +30,11 @@ public class User {
     @Column
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL,targetEntity = Role.class)
-    private Set<Role> roles;
+    @ManyToMany(cascade = CascadeType.PERSIST,targetEntity = Authorities.class)
+    @JoinTable(
+            name = "user_authorities",
+            joinColumns = @JoinColumn(name = "user_fk",referencedColumnName = "id",foreignKey = @ForeignKey(name = "user_key")),
+            inverseJoinColumns = @JoinColumn(name = "authority_fk",referencedColumnName = "authority",foreignKey = @ForeignKey(name = "authority_key"))
+    )
+    private Set<Authorities> roles = new HashSet<>();
 }

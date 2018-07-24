@@ -11,11 +11,11 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table
-public class Role {
+@Table(name = "authorities")
+public class Authorities {
 
     @Id
-    @Column
+    @Column(name = "authority")
     @ColumnDefault("USER")
     private String roleName;
 
