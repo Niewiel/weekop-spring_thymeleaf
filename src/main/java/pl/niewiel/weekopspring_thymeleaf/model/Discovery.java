@@ -1,6 +1,7 @@
 package pl.niewiel.weekopspring_thymeleaf.model;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.net.URL;
@@ -16,15 +17,19 @@ public class Discovery {
     @Column
     private long discoveryId;
 
+    @NotEmpty
     @Column
     private String name;
 
+    @NotEmpty
     @Column
     private String description;
 
+    @NotEmpty
     @Column
     private URL url;
 
+    @NotEmpty
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
     private User user;
 
