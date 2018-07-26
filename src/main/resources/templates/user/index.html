@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:>
 <head>
     <title>Welcome Security with Spring Boot!</title>
     <meta charset="utf-8"/>
@@ -25,10 +25,16 @@
             <span class="glyphicon glyphicon-list"></span>
         </button>
 
-        <div class="collapse navbar-collapse navHeaderCollapse">
+        <div sec:authorize="isFullyAuthenticated()" class="collapse navbar-collapse navHeaderCollapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="./index">Główna</a></li>
-                <li><a href="/new">Dodaj</a></li>
+                <li><a href="#">Dodaj</a></li>
+                <li><a href="/logout">wyloguj się</a></li>
+            </ul>
+        </div>
+        <div sec:authorize="isAnonymous()" class="collapse navbar-collapse navHeaderCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="./index">Główna</a></li>
                 <li><a href="/login">Zaloguj się</a></li>
             </ul>
         </div>
