@@ -17,8 +17,7 @@ public interface AuthorityRepository extends JpaRepository<Authority,String> {
     @Override
     <S extends Authority> S save(S s);
 
-    @Override
-    Optional<Authority> findById(String s);
+    Authority findByAuthority(String authority);
 
     @Override
     <S extends Authority> List<S> findAll(Example<S> example);

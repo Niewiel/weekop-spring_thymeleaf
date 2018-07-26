@@ -16,8 +16,12 @@ public class Authority {
 
     @Id
     @Column(name = "authority")
-    private String roleName;
+    private String authority;
 
     @Column
     private String description;
+
+    public Authority(String authority) {
+        this.authority = authority;
+    }
 }
