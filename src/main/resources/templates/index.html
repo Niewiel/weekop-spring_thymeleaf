@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:>
 <head>
     <title>Welcome Security with Spring Boot!</title>
     <meta charset="utf-8"/>
@@ -16,28 +16,25 @@
 </head>
 
 <body class="container" style="margin:50px">
-<
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <a href="index.html" class="navbar-brand">Weekop</a>
+        <a href="#" class="navbar-brand">Weekop</a>
 
         <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
             <span class="glyphicon glyphicon-list"></span>
         </button>
 
-        <div class="collapse navbar-collapse navHeaderCollapse" >
-            <ul sec:authorize="isAnonymous()" class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">Główna</a></li>
-                <li><a href="/login">Zalogij się</a></li>
+        <div sec:authorize="hasRole('USER_ROLE')" class="collapse navbar-collapse navHeaderCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="./index">Główna</a></li>
+                <li><a href="user/new.html">Dodaj</a></li>
+                <li><a href="/user/logout">wyloguj się</a></li>
             </ul>
-            <ul sec:authorize="isFullyAuthenticated()" class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">Główna</a></li>
-                <li><a href="new.html">Dodaj</a></li>
-                <li><a href="/logout">Wyloguj się</a></li>
+            <ul sec:authorize="isRememberMe()" class="nav navbar-nav navbar-right">
+                <li class="active"><a href="./index">Główna</a></li>
+                <li><a href="/login">Zaloguj się</a></li>
             </ul>
-        </div>
-
-
         </div>
 
     </div>

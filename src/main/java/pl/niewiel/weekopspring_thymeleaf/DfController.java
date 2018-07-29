@@ -3,17 +3,13 @@ package pl.niewiel.weekopspring_thymeleaf;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class DfController {
 
-    @RequestMapping("/user/index")
-    public String index(){
-        return "user/index";
-    }
+
 
     @GetMapping("/greeting")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
@@ -21,6 +17,10 @@ public class DfController {
         return "greeting";
     }
 
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
+    }
 
 
 }

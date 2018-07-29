@@ -27,6 +27,11 @@ public class UserController {
     }
 
 
+    @RequestMapping("/index")
+    public String index(){
+        return "user/index";
+    }
+
     @RequestMapping("/register")
     public String register(){
         return "/register";
@@ -35,13 +40,18 @@ public class UserController {
     @PostMapping(path = "/add")
     public String add(@RequestParam String username, @RequestParam String email, @RequestParam String password){
         Authority authority;
-        authority=authorityService.getByAuthority("USER");
+        authority=authorityService.getByAuthority("USER_ROLE");
         if (authority==null){
-            authorityService.add(new Authority("USER"));
+            authorityService.add(new Authority("USER_ROLE"));
         }
         User user=new User(username,email,password);
-        user.setAuthorities(Collections.singletonList(authority));
+        user.setAuthorities(Arrays.asList(authority));
         userService.addUser(user);
         return "redirect:/user/index";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(){
+        return "redirect:/";
     }
 }

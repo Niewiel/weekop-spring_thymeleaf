@@ -29,12 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/user/new").hasAnyRole()
+                .antMatchers("/user/new").hasAuthority("USER_ROLE")
                 .and()
-                .formLogin().successForwardUrl("/user/index")
+                .formLogin().loginPage("/login")
                 .permitAll()
                 .and()
-                .logout()
+                .logout().logoutSuccessUrl("/user/logout").clearAuthentication(true)
                 .permitAll();
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
@@ -43,11 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.
-//                inMemoryAuthentication()
-//                .withUser("user")
-//                .password("{noop}user")
-//                .authorities("USER");
         auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .usersByUsernameQuery("SELECT user_name, password, is_active " +
                         "FROM users " +
