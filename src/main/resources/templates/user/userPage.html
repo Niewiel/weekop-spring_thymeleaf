@@ -1,5 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Welcome to my weekop</title>
     <meta charset="utf-8"/>
@@ -22,17 +23,18 @@
 
 <div class="container">
     <div class="col col-md-11 col-sm-10">
-        <h3 class="centered"><a href="#">Znalezisko</a></h3>
-        <h6>
-            <small>Dodane przez: Mietek, Dnia: 01 styczeń 2015</small>
-        </h6>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-            ex ea commodo consequat.
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-            ex ea commodo consequat.</p>
-        <button class="btn btn-default btn-xs">Przejdź do strony</button>
+        <h3 class="centered" sec:authentication="name">user name</h3>
+        <table>
+            <th:block th:each="user : ${userList}">
+                <tr>
+                    <td th:text="${user.userName}">user</td>
+                    <td th:text="${user.password}">password</td>
+                </tr>
+                <tr>
+                    <td>dupa</td>
+                </tr>
+            </th:block>
+        </table>
     </div>
 </div>
 

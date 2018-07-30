@@ -21,6 +21,9 @@ public class Authority {
     @Column
     private String description;
 
+    public Authority() {
+    }
+
     public Authority(String authority) {
         this.authority = authority;
     }

@@ -12,9 +12,11 @@ import pl.niewiel.weekopspring_thymeleaf.service.AuthorityService;
 import pl.niewiel.weekopspring_thymeleaf.service.DiscoveryService;
 import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
+import java.net.URL;
 import java.security.Principal;
 
 @Controller
+@RequestMapping("/discovery")
 public class DiscoveryAddController {
 
     private final UserService userService;
@@ -29,16 +31,14 @@ public class DiscoveryAddController {
     }
 
     @RequestMapping("/new")
-    public String newDiscovery(Authentication authentication) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        System.out.println("User has authorities: " + userDetails.getAuthorities());
-        return "/new";
+    public String newDiscovery() {
+        return "/discovery/new";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@PathVariable String name, @PathVariable String description, @PathVariable String url, Principal principal) {
+    public String add(@PathVariable String name, @PathVariable String description, @PathVariable URL url, Principal principal) {
         if (principal != null) {
-            discoveryService.add(new Discovery(name, description, url, userService.getByUsername(principal.getName())));
+            discoveryService.add(new Discovery(name, description, url.toString(), userService.getByUsername(principal.getName())));
             return "redirect:/index";
         } else return "error";
     }

@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:>
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Welcome Security with Spring Boot!</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 <body>
-    <div th:fragment="authorized" class="container">
-        <a href="#" class="navbar-brand">Weekop</a>
+    <div class="container">
+        <a th:href="@{/}" class="navbar-brand">Weekop</a>
 
         <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
             <span class="glyphicon glyphicon-list"></span>
         </button>
-        <div class="collapse navbar-collapse navHeaderCollapse">
+        <div  class="collapse navbar-collapse navHeaderCollapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="./index">Główna</a></li>
-                <li><a href="../new">Dodaj</a></li>
-                <li><a href="/login">Zaloguj się</a></li>
+                <li class="active"><a th:href="@{/}">Główna</a></li>
+                <li sec:authorize="hasAnyRole('USER')"><a th:href="@{/discovery/new}">Dodaj</a></li>
+                <li sec:authorize="hasRole('USER')"><a th:href="@{/logout}">Wyloguj się</a></li>
+                <li sec:authorize="hasRole('USER')"><a th:href="@{/user/userPage}">Moje konto</a></li>
+                <li sec:authorize="!hasRole('USER')"><a th:href="@{/login}">Zaloguj się</a></li>
             </ul>
         </div>
     </div>
-    <div th:fragment="notAuthorized" class="container">
-        <a href="#" class="navbar-brand">Weekop</a>
-
-        <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-            <span class="glyphicon glyphicon-list"></span>
-        </button>
-        <div class="collapse navbar-collapse navHeaderCollapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="./index">Główna</a></li>
-                <li><a href="../new.html">Dodaj</a></li>
-                <li><a href="/login">Zaloguj się</a></li>
-            </ul>
-        </div>
-    </div>
+    <h3 class="centered" sec:authorize="hasRole('ADMIN')">is Fully Authenticated</h3>
 </body>
 </html>

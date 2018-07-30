@@ -36,6 +36,9 @@ public class Discovery {
     @Column
     private Timestamp date;
 
+    public Discovery() {
+    }
+
     public Discovery(String name, String description, String url, User user) {
         this.name = name;
         this.description = description;

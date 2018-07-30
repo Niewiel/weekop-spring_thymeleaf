@@ -1,7 +1,10 @@
 package pl.niewiel.weekopspring_thymeleaf.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +14,6 @@ import pl.niewiel.weekopspring_thymeleaf.service.AuthorityService;
 import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @Controller
 @RequestMapping("/user")
@@ -27,31 +29,15 @@ public class UserController {
     }
 
 
-    @RequestMapping("/index")
-    public String index(){
-        return "user/index";
+    @RequestMapping("/userPage")
+    public String index(Model model,Authentication authentication) {
+
+        model.addAttribute("userList",userService.getAll());
+        return "/user/userPage";
     }
 
-    @RequestMapping("/register")
-    public String register(){
-        return "/register";
-    }
 
-    @PostMapping(path = "/add")
-    public String add(@RequestParam String username, @RequestParam String email, @RequestParam String password){
-        Authority authority;
-        authority=authorityService.getByAuthority("USER_ROLE");
-        if (authority==null){
-            authorityService.add(new Authority("USER_ROLE"));
-        }
-        User user=new User(username,email,password);
-        user.setAuthorities(Arrays.asList(authority));
-        userService.addUser(user);
-        return "redirect:/user/index";
-    }
 
-    @RequestMapping("/logout")
-    public String logout(){
-        return "redirect:/";
-    }
+
+
 }

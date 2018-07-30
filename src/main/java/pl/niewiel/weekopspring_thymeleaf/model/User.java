@@ -2,17 +2,13 @@ package pl.niewiel.weekopspring_thymeleaf.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.context.annotation.Scope;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
-@Scope("session")
 @Table(name = "users")
 public class User {
 
@@ -44,6 +40,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "authority_fk", referencedColumnName = "authority", foreignKey = @ForeignKey(name = "authority_key"))
     )
     private List<Authority> authorities;
+
+    public User() {
+    }
 
     public User(@NotEmpty @UniqueElements String userName, @NotEmpty @UniqueElements @Email String email, @NotEmpty String password) {
         this.userName = userName;
