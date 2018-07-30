@@ -17,24 +17,29 @@ public class Discovery {
     @Column
     private long discoveryId;
 
-    @NotEmpty
+
     @Column
     private String name;
 
-    @NotEmpty
+
     @Column
     private String description;
 
-    @NotEmpty
-    @Column
-    private URL url;
 
-    @NotEmpty
+    @Column
+    private String url;
+
+
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class)
     private User user;
 
     @Column
     private Timestamp date;
 
-
+    public Discovery(String name, String description, String url, User user) {
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.user = user;
+    }
 }

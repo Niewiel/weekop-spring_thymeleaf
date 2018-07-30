@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:>
+<body>
+    <div th:fragment="authorized" class="container">
+        <a href="#" class="navbar-brand">Weekop</a>
+
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+            <span class="glyphicon glyphicon-list"></span>
+        </button>
+        <div class="collapse navbar-collapse navHeaderCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="./index">Główna</a></li>
+                <li><a href="../new">Dodaj</a></li>
+                <li><a href="/login">Zaloguj się</a></li>
+            </ul>
+        </div>
+    </div>
+    <div th:fragment="notAuthorized" class="container">
+        <a href="#" class="navbar-brand">Weekop</a>
+
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
+            <span class="glyphicon glyphicon-list"></span>
+        </button>
+        <div class="collapse navbar-collapse navHeaderCollapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="./index">Główna</a></li>
+                <li><a href="../new.html">Dodaj</a></li>
+                <li><a href="/login">Zaloguj się</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

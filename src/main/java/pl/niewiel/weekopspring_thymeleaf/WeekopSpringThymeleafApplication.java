@@ -13,10 +13,5 @@ public class WeekopSpringThymeleafApplication implements WebMvcConfigurer {
         SpringApplication.run(WeekopSpringThymeleafApplication.class, args);
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-    }
 
 }

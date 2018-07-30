@@ -17,27 +17,8 @@
 
 <body class="container" style="margin:50px">
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <a href="#" class="navbar-brand">Weekop</a>
-
-        <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-            <span class="glyphicon glyphicon-list"></span>
-        </button>
-
-        <div sec:authorize="hasRole('USER_ROLE')" class="collapse navbar-collapse navHeaderCollapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="./index">Główna</a></li>
-                <li><a href="user/new.html">Dodaj</a></li>
-                <li><a href="/user/logout">wyloguj się</a></li>
-            </ul>
-            <ul sec:authorize="isRememberMe()" class="nav navbar-nav navbar-right">
-                <li class="active"><a href="./index">Główna</a></li>
-                <li><a href="/login">Zaloguj się</a></li>
-            </ul>
-        </div>
-
-    </div>
+<nav sec:authorize="hasRole('ADMIN_ROLE')" class="navbar navbar-inverse navbar-fixed-top">
+    <div th:replace="fragments/header::authorized"></div>
 </nav>
 
 <div class="container">
