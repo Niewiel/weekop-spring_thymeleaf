@@ -1,8 +1,6 @@
 package pl.niewiel.weekopspring_thymeleaf.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,17 +12,20 @@ import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
 import java.net.URL;
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/discovery")
-public class DiscoveryAddController {
+public class DiscoveryController {
 
     private final UserService userService;
     private final DiscoveryService discoveryService;
     private final AuthorityService authorityService;
 
     @Autowired
-    public DiscoveryAddController(UserService userService, AuthorityService authorityService, DiscoveryService discoveryService) {
+    public DiscoveryController(UserService userService, AuthorityService authorityService, DiscoveryService discoveryService) {
         this.userService = userService;
         this.authorityService = authorityService;
         this.discoveryService = discoveryService;
@@ -36,10 +37,13 @@ public class DiscoveryAddController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@PathVariable String name, @PathVariable String description, @PathVariable URL url, Principal principal) {
+    public String add(String inputName, String inputOpis,String inputUrl, Principal principal) {
+        Discovery discovery;
         if (principal != null) {
-            discoveryService.add(new Discovery(name, description, url.toString(), userService.getByUsername(principal.getName())));
-            return "redirect:/index";
+            discovery=new Discovery(inputName, inputOpis, inputUrl, userService.getByUsername(principal.getName()));
+            discovery.setDate(new Timestamp(new Date().getTime()));
+            discoveryService.add(discovery);
+            return "redirect:/";
         } else return "error";
     }
 }

@@ -51,6 +51,7 @@ public class LoginController {
         System.err.println(authority == null);
         if (authority == null) {
             authorityService.add(new Authority("ROLE_USER"));
+            authority = authorityService.getByAuthority("ROLE_USER");
         }
         User user = new User(username, email, password);
         user.setAuthorities(Arrays.asList(authority));
