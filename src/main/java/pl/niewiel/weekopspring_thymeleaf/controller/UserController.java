@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.niewiel.weekopspring_thymeleaf.model.Authority;
 import pl.niewiel.weekopspring_thymeleaf.model.User;
 import pl.niewiel.weekopspring_thymeleaf.service.AuthorityService;
+import pl.niewiel.weekopspring_thymeleaf.service.DiscoveryService;
 import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
 import java.util.Arrays;
@@ -19,25 +20,20 @@ import java.util.Arrays;
 @RequestMapping("/user")
 public class UserController {
 
+    private final DiscoveryService discoveryService;
     private final UserService userService;
-    private final AuthorityService authorityService;
 
     @Autowired
-    public UserController(UserService userService, AuthorityService authorityService) {
+    public UserController(DiscoveryService discoveryService, UserService userService) {
+        this.discoveryService = discoveryService;
         this.userService = userService;
-        this.authorityService = authorityService;
     }
-
 
     @RequestMapping("/userPage")
-    public String index(Model model,Authentication authentication) {
-
-        model.addAttribute("userList",userService.getAll());
+    public String index(Model model, Authentication authentication) {
+        model.addAttribute("discoveryList", discoveryService.findDiscoveryByUser(userService.getByUsername(authentication.getName())));
         return "/user/userPage";
     }
-
-
-
 
 
 }

@@ -36,6 +36,12 @@ public class Discovery {
     @Column
     private Timestamp date;
 
+    @Column
+    private int upVote=0;
+
+    @Column
+    private int downVote=0;
+
     public Discovery() {
     }
 
@@ -44,6 +50,8 @@ public class Discovery {
         this.description = description;
         this.url = url;
         this.user = user;
+        this.upVote=0;
+        this.downVote=0;
     }
 
     public long getDiscoveryId() {
@@ -92,5 +100,21 @@ public class Discovery {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getUpVote() {
+        return upVote;
+    }
+
+    public void setUpVote(int upVote) {
+        this.upVote = upVote;
+    }
+
+    public int getDownVote() {
+        return downVote;
+    }
+
+    public void setDownVote(int downVote) {
+        this.downVote = downVote;
     }
 }

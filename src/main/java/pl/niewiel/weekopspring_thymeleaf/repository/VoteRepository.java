@@ -9,11 +9,21 @@ import pl.niewiel.weekopspring_thymeleaf.model.Vote;
 import java.util.List;
 
 @Repository
-public interface VoteRepository extends JpaRepository<Vote,Long> {
+public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     Vote findVoteByUserAndDiscovery(User user, Discovery discovery);
 
     @Override
     List<Vote> findAll();
 
+    @Override
+    Vote getOne(Long aLong);
+
+    @Override
+    void deleteById(Long aLong);
+
+    @Override
+    <S extends Vote> S save(S s);
+
+    Vote findVoteByDiscoveryAndUser(Discovery discovery, User user);
 }
