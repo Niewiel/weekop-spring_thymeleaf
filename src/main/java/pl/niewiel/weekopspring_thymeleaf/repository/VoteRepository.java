@@ -23,7 +23,7 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
     void deleteById(Long aLong);
 
     @Override
-    <S extends Vote> S save(S s);
+    <S extends Vote> S saveAndFlush(S s);
 
     Vote findVoteByDiscoveryAndUser(Discovery discovery, User user);
 }

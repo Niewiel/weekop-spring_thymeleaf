@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -38,6 +39,22 @@ public class Vote {
         this.user = user;
         this.date = new Timestamp(new Date().getTime());
         this.voteType = voteType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vote)) return false;
+        Vote vote = (Vote) o;
+        return
+                Objects.equals(discovery, vote.discovery) &&
+                Objects.equals(user, vote.user) &&
+                voteType == vote.voteType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(discovery, user, voteType);
     }
 
     public long getVote_id() {

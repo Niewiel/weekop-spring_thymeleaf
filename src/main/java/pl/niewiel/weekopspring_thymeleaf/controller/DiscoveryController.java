@@ -2,7 +2,6 @@ package pl.niewiel.weekopspring_thymeleaf.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pl.niewiel.weekopspring_thymeleaf.model.Discovery;
@@ -10,10 +9,8 @@ import pl.niewiel.weekopspring_thymeleaf.service.AuthorityService;
 import pl.niewiel.weekopspring_thymeleaf.service.DiscoveryService;
 import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
-import java.net.URL;
 import java.security.Principal;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
@@ -42,7 +39,7 @@ public class DiscoveryController {
         if (principal != null) {
             discovery=new Discovery(inputName, inputOpis, inputUrl, userService.getByUsername(principal.getName()));
             discovery.setDate(new Timestamp(new Date().getTime()));
-            discoveryService.add(discovery);
+            discoveryService.addOrUpdate(discovery);
             return "redirect:/";
         } else return "error";
     }
