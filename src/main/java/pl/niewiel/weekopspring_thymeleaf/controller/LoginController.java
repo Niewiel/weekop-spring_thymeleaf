@@ -1,22 +1,29 @@
 package pl.niewiel.weekopspring_thymeleaf.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.niewiel.weekopspring_thymeleaf.model.Authority;
 import pl.niewiel.weekopspring_thymeleaf.model.User;
 import pl.niewiel.weekopspring_thymeleaf.service.AuthorityService;
 import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
+
 import javax.validation.Valid;
-import java.util.Arrays;
+import java.io.Serializable;
+import java.util.Collections;
 
 @Controller
-public class LoginController {
+public class LoginController implements UserDetailsService, Serializable {
+
 
     private final UserService userService;
     private final AuthorityService authorityService;
@@ -42,13 +49,16 @@ public class LoginController {
     }
 
     @GetMapping("/register")
-    public String register(){
+    public String register(Model model) {
+        User registerForm = new User();
+        model.addAttribute("registerForm", registerForm);
         return "/register";
     }
 
     @PostMapping(path = "/register")
     public String add(@Valid User registerForm, BindingResult bindingResult, @RequestParam String username, @RequestParam String email, @RequestParam String password) {
-        if (bindingResult.hasErrors()){
+
+        if (bindingResult.hasErrors()) {
             return "/register";
         }
         Authority authority;
@@ -59,9 +69,21 @@ public class LoginController {
             authority = authorityService.getByAuthority("ROLE_USER");
         }
         User user = new User(username, email, password);
-        user.setAuthorities(Arrays.asList(authority));
+        user.setAuthorities(Collections.singletonList(authority));
         userService.addUser(user);
         System.out.println(user.getAuthorities());
         return "redirect:/login";
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (username.equals("") || username.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("User %s is invalid!", username));
+        }
+        User login = userService.getByUsername(username);
+        if (login == null) {
+            throw new UsernameNotFoundException(String.format("User %s does not exist!", username));
+        }
+        return null;
     }
 }

@@ -1,13 +1,11 @@
 package pl.niewiel.weekopspring_thymeleaf.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 
@@ -20,17 +18,19 @@ public class User {
     @Column
     private long id;
 
-    @Column
+    @Column(unique = true)
+    @UniqueElements( message = "taki użytkownik jest już zarejestrowany")
     private String userName;
 
-
-    @Column
+    @Min(4)
+    @Column(unique = true)
     private String email;
 
     @Column
     private boolean isActive;
 
 
+    @Min(6)
     @Column
     private String password;
 
@@ -45,7 +45,7 @@ public class User {
     public User() {
     }
 
-    public User(@UniqueElements String userName, @UniqueElements @Email String email, String password) {
+    public User( String userName,  String email, String password) {
         this.userName = userName;
         this.email = email;
         this.password = password;
