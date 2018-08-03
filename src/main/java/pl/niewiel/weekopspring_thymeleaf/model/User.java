@@ -20,14 +20,10 @@ public class User {
     @Column
     private long id;
 
-    @UniqueElements(message = "taki użytkownik już istnieje")
-    @NotNull(message = "pole wymagane")
-    @Size(min = 3,message = "podaj min. 3 znaki")
     @Column
     private String userName;
 
 
-    @Email(message = "podaj prawidłowy email")
     @Column
     private String email;
 
@@ -36,7 +32,6 @@ public class User {
 
 
     @Column
-    @Min(value = 6,message = "hasło musi mieć przynajmniej 6 znaków")
     private String password;
 
     @ManyToMany(cascade = CascadeType.PERSIST, targetEntity = Authority.class)
