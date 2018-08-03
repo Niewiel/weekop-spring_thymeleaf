@@ -1,17 +1,21 @@
 package pl.niewiel.weekopspring_thymeleaf.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import pl.niewiel.weekopspring_thymeleaf.model.Authority;
 import pl.niewiel.weekopspring_thymeleaf.model.User;
 import pl.niewiel.weekopspring_thymeleaf.service.AuthorityService;
 import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 
 @Controller
@@ -26,6 +30,7 @@ public class LoginController {
         this.authorityService = authorityService;
     }
 
+
     // Login form
     @RequestMapping("/login")
     public String login() {
@@ -39,13 +44,16 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public String register(){
         return "/register";
     }
 
-    @PostMapping(path = "/add")
-    public String add(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
+    @PostMapping(path = "/register")
+    public String add(@Valid User registerForm, BindingResult bindingResult, @RequestParam String username, @RequestParam String email, @RequestParam String password) {
+        if (bindingResult.hasErrors()){
+            return "/register";
+        }
         Authority authority;
         authority = authorityService.getByAuthority("ROLE_USER");
         System.err.println(authority == null);

@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -15,9 +14,9 @@ import java.util.Collections;
 @SpringBootApplication
 public class WeekopSpringThymeleafApplication extends WebMvcConfigurerAdapter {
 
-    final SpringTemplateEngine springTemplateEngine;
+    private final SpringTemplateEngine springTemplateEngine;
 
-    final
+    private final
     SpringSecurityDialect springSecurityDialect;
 
     @Autowired

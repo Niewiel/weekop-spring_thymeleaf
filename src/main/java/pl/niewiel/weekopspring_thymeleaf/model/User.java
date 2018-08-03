@@ -5,6 +5,9 @@ import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 
@@ -17,20 +20,23 @@ public class User {
     @Column
     private long id;
 
-    @NotEmpty
+    @UniqueElements(message = "taki użytkownik już istnieje")
+    @NotNull(message = "pole wymagane")
+    @Size(min = 3,message = "podaj min. 3 znaki")
     @Column
     private String userName;
 
-    @NotEmpty
-    @Email
+
+    @Email(message = "podaj prawidłowy email")
     @Column
     private String email;
 
     @Column
     private boolean isActive;
 
-    @NotEmpty
+
     @Column
+    @Min(value = 6,message = "hasło musi mieć przynajmniej 6 znaków")
     private String password;
 
     @ManyToMany(cascade = CascadeType.PERSIST, targetEntity = Authority.class)
@@ -44,7 +50,7 @@ public class User {
     public User() {
     }
 
-    public User(@NotEmpty @UniqueElements String userName, @NotEmpty @UniqueElements @Email String email, @NotEmpty String password) {
+    public User(@UniqueElements String userName, @UniqueElements @Email String email, String password) {
         this.userName = userName;
         this.email = email;
         this.password = password;

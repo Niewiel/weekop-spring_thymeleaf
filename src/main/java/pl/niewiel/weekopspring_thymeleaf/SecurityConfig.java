@@ -25,7 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public SecurityConfig(DataSource dataSource, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.dataSource = dataSource;
-
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
