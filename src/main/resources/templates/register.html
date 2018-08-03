@@ -24,17 +24,15 @@
         <form action="#" th:action="@{/register}" th:object="${registerForm}" method="post">
             <h2 class="form-signin-heading">Zarejestruj się</h2>
             <fieldset>
-                <input th:field="*{email}" class="form-control" placeholder="Email"
-                        />
+                <input th:field="${registerForm.email}" name="email" class="form-control" placeholder="Email"/>
                 <!--<input type="text" th:field=""/>-->
 
                 <span th:if="${#fields.hasErrors('email')}">Email error</span>
 
-                <input name="username" type="text" class="form-control" placeholder="Nazwa użytkownika"
-                        />
-                <span ></span>
+                <input name="username" type="text" class="form-control" placeholder="Nazwa użytkownika"/>
+                <span></span>
 
-                <input name="password" type="password" class="form-control" placeholder="Hasło" />
+                <input name="password" type="password" class="form-control" placeholder="Hasło"/>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
             </fieldset>
@@ -44,7 +42,7 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="navbar-text">Weekop - developed by <a href="http://javastart.pl">JavaStart.pl</a></p>
+        <p class="panel-footer">Weekop - developed by <a href="http://javastart.pl">JavaStart.pl</a></p>
     </div>
 </footer>
 </body>

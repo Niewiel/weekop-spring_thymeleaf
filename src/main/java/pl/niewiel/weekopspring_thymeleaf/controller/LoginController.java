@@ -50,28 +50,26 @@ public class LoginController implements UserDetailsService, Serializable {
 
     @GetMapping("/register")
     public String register(Model model) {
-        User registerForm = new User();
-        model.addAttribute("registerForm", registerForm);
+        model.addAttribute("registerForm", new User());
         return "/register";
     }
 
     @PostMapping(path = "/register")
     public String add(@Valid User registerForm, BindingResult bindingResult, @RequestParam String username, @RequestParam String email, @RequestParam String password) {
-
         if (bindingResult.hasErrors()) {
             return "/register";
         }
-        Authority authority;
-        authority = authorityService.getByAuthority("ROLE_USER");
-        System.err.println(authority == null);
-        if (authority == null) {
-            authorityService.add(new Authority("ROLE_USER"));
-            authority = authorityService.getByAuthority("ROLE_USER");
-        }
-        User user = new User(username, email, password);
-        user.setAuthorities(Collections.singletonList(authority));
-        userService.addUser(user);
-        System.out.println(user.getAuthorities());
+//        Authority authority;
+//        authority = authorityService.getByAuthority("ROLE_USER");
+//        System.err.println(authority == null);
+//        if (authority == null) {
+//            authorityService.add(new Authority("ROLE_USER"));
+//            authority = authorityService.getByAuthority("ROLE_USER");
+//        }
+//        User user = new User(username, email, password);
+//        user.setAuthorities(Collections.singletonList(authority));
+//        userService.addUser(user);
+//        System.out.println(user.getAuthorities());
         return "redirect:/login";
     }
 

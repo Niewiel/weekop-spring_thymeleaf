@@ -19,7 +19,6 @@ public class User {
     private long id;
 
     @Column(unique = true)
-    @UniqueElements( message = "taki użytkownik jest już zarejestrowany")
     private String userName;
 
     @Min(4)
