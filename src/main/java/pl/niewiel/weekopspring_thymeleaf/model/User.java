@@ -1,7 +1,7 @@
 package pl.niewiel.weekopspring_thymeleaf.model;
 
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.validation.annotation.Validated;
+
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,10 +18,12 @@ public class User {
     @Column
     private long id;
 
+    @Length(min = 3,max = 25)
     @Column(unique = true)
     private String userName;
 
-    @Min(4)
+    @Length(min = 4,message = "musi zawierać przynajmniej 4 znaki")
+    @Email(message = "podaj prawidłowy adres")
     @Column(unique = true)
     private String email;
 
@@ -29,7 +31,7 @@ public class User {
     private boolean isActive;
 
 
-    @Min(6)
+    @Length(min = 6)
     @Column
     private String password;
 
@@ -49,6 +51,14 @@ public class User {
         this.email = email;
         this.password = password;
         this.isActive = true;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUserName() {
