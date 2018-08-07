@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -53,6 +54,21 @@ public class User {
         this.email = email;
         this.password = password;
         this.isActive = true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getUserName(), user.getUserName()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getAuthorities(), user.getAuthorities());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserName(), getEmail(), getAuthorities());
     }
 
     public long getId() {

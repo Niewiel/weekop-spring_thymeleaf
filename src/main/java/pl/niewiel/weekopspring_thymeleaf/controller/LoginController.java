@@ -66,9 +66,9 @@ public class LoginController  {
                 authority = authorityService.getByAuthority("ROLE_USER");
             }
             User newUser = new User(userName, email, password);
-            user.setAuthorities(Arrays.asList(authority));
+            newUser.setAuthorities(Arrays.asList(authority));
             userService.addUser(newUser);
-            System.out.println(user.getAuthorities());
+            System.out.println(newUser.getAuthorities());
             return "redirect:/login";
         }
     }

@@ -38,10 +38,7 @@ public class VoteController {
                 discoveryService.addOrUpdate(discovery);
                 voteService.add(vote);
             } else {
-                Vote newVote=new Vote(discovery, userService.getByUsername(authentication.getName()), VoteType.VOTE_UP);
-                if (!vote.equals(newVote)) {
-                    vote.setVoteType(VoteType.VOTE_UP);
-                    voteService.add(vote);
+                if (voteService.update(vote, new Vote(discovery, userService.getByUsername(authentication.getName()), VoteType.VOTE_UP))) {
                     discovery.setDownVote(discovery.getDownVote() - 1);
                     discovery.setUpVote(discovery.getUpVote() + 1);
                     discoveryService.addOrUpdate(discovery);
@@ -62,10 +59,7 @@ public class VoteController {
                 discoveryService.addOrUpdate(discovery);
                 voteService.add(vote);
             } else {
-                Vote newVote=new Vote(discovery, userService.getByUsername(authentication.getName()), VoteType.VOTE_DOWN);
-                if (!vote.equals(newVote)) {
-                    vote.setVoteType(VoteType.VOTE_DOWN);
-                    voteService.add(vote);
+                if (voteService.update(vote, new Vote(discovery, userService.getByUsername(authentication.getName()), VoteType.VOTE_DOWN))) {
                     discovery.setDownVote(discovery.getDownVote() + 1);
                     discovery.setUpVote(discovery.getUpVote() - 1);
                     discoveryService.addOrUpdate(discovery);

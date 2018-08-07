@@ -1,11 +1,10 @@
 package pl.niewiel.weekopspring_thymeleaf.model;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import java.net.URL;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -52,6 +51,22 @@ public class Discovery {
         this.user = user;
         this.upVote=0;
         this.downVote=0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Discovery)) return false;
+        Discovery discovery = (Discovery) o;
+        return Objects.equals(getName(), discovery.getName()) &&
+                Objects.equals(getDescription(), discovery.getDescription()) &&
+                Objects.equals(getUrl(), discovery.getUrl()) &&
+                Objects.equals(getUser(), discovery.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getDescription(), getUrl(), getUser());
     }
 
     public long getDiscoveryId() {
