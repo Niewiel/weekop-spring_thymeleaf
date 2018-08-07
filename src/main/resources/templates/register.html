@@ -21,15 +21,18 @@
 
 <div>
     <div class="col-sm-6 col-md-4 col-md-offset-4">
-        <form action="#" th:action="@{/register}" th:object="${user}" method="post" >
+        <form th:action="@{/add}" th:object="${user}" method="post">
             <h2 class="form-signin-heading">Zarejestruj się</h2>
-            <input th:field="*{email}" name="email" class="form-control"/>
+            <input th:field="*{email}" name="email" class="form-control" title="email"/>
             <p class="has-error" th:each="error : ${#fields.errors('email')}"
-                  th:text="${error}">Validation error</p>
-            <input name="username" type="text" class="form-control" placeholder="Nazwa użytkownika"/>
-
-            <input name="password" type="password" class="form-control" placeholder="Hasło"/>
-
+               th:text="${error}">email error</p>
+            <input th:field="*{userName}" name="username" type="text" class="form-control"
+                   placeholder="Nazwa użytkownika"/>
+            <p class="has-error" th:each="error : ${#fields.errors('userName')}"
+               th:text="${error}">user error</p>
+            <input th:field="*{password}" name="password" type="password" class="form-control" placeholder="Hasło"/>
+            <p class="has-error" th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">password error</p>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
         </form>
     </div>

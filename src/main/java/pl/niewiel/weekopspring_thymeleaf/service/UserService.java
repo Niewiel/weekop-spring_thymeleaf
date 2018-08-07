@@ -19,16 +19,20 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
-    public User getByUsername(String username){
+    public User getByUsername(String username) {
         return userRepository.findByUserName(username);
     }
 
-    public List<User> getAll(){
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 

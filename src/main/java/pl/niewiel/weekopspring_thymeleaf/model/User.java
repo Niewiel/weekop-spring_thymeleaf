@@ -2,6 +2,7 @@ package pl.niewiel.weekopspring_thymeleaf.model;
 
 
 import org.hibernate.validator.constraints.Length;
+import pl.niewiel.weekopspring_thymeleaf.validator.unique.user.UniqueUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,6 +20,7 @@ public class User {
     private long id;
 
     @Length(min = 3,max = 25)
+    @UniqueUser
     @Column(unique = true)
     private String userName;
 

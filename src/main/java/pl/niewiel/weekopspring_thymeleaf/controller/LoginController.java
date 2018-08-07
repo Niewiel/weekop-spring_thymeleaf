@@ -16,10 +16,11 @@ import pl.niewiel.weekopspring_thymeleaf.service.UserService;
 
 import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collections;
 
 @Controller
-public class LoginController implements UserDetailsService, Serializable {
+public class LoginController  {
 
 
     private final UserService userService;
@@ -52,8 +53,8 @@ public class LoginController implements UserDetailsService, Serializable {
         return "/register";
     }
 
-    @PostMapping(path = "/register")
-    public String add(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam String username, @RequestParam String email, @RequestParam String password) {
+    @PostMapping(path = "/add")
+    public String add(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, @RequestParam String userName, @RequestParam String email, @RequestParam String password) {
         if (bindingResult.hasErrors()) {
             return "/register";
         } else {
@@ -64,23 +65,13 @@ public class LoginController implements UserDetailsService, Serializable {
                 authorityService.add(new Authority("ROLE_USER"));
                 authority = authorityService.getByAuthority("ROLE_USER");
             }
-            User newUser = new User(username, email, password);
-            user.setAuthorities(Collections.singletonList(authority));
+            User newUser = new User(userName, email, password);
+            user.setAuthorities(Arrays.asList(authority));
             userService.addUser(newUser);
             System.out.println(user.getAuthorities());
             return "redirect:/login";
         }
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (username.equals("") || username.isEmpty()) {
-            throw new UsernameNotFoundException(String.format("User %s is invalid!", username));
-        }
-        User login = userService.getByUsername(username);
-        if (login == null) {
-            throw new UsernameNotFoundException(String.format("User %s does not exist!", username));
-        }
-        return null;
-    }
+
 }
